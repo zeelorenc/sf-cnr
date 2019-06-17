@@ -91,7 +91,12 @@ new
 
 	g_gangzoneAttacker				[ MAX_TURFS ] = { INVALID_GANG_ID, ... },
 	g_gangzoneAttackCount           [ MAX_TURFS ],
-	g_gangzoneAttackTimeout			[ MAX_TURFS ]
+	g_gangzoneAttackTimeout			[ MAX_TURFS ],
+
+	p_TurfProgressTimer				[ MAX_PLAYERS ] = { -1, ... },
+
+	PlayerText: p_playerTurfTitle 	[ MAX_PLAYERS ] = { PlayerText: INVALID_TEXT_DRAW, ... },
+	PlayerBar: p_playerTurfProgress [ MAX_PLAYERS ]
 ;
 
 /* ** Forwards ** */
@@ -105,6 +110,21 @@ hook OnGameModeInit( )
 		Turf_Create( g_gangzoneData[ i ] [ E_MIN_X ], g_gangzoneData[ i ] [ E_MIN_Y ], g_gangzoneData[ i ] [ E_MAX_X ], g_gangzoneData[ i ] [ E_MAX_Y ], INVALID_GANG_ID, COLOR_GANGZONE );
 	}
 	return 1;
+}
+
+hook OnPlayerConnect( playerid )
+{
+ 	p_playerTurfProgress[ playerid ] = CreatePlayerProgressBar( playerid, 47.000000, 263.000000, 82.500000, 7.199999, COLOR_GOLD, 100.0000, 0 ); // -2007060993
+ 	
+	p_playerTurfTitle[ playerid ] = CreatePlayerTextDraw( playerid, 86.000000, 248.000000, "Control the area" );
+	PlayerTextDrawAlignment( playerid, p_playerTurfTitle[ playerid ], 2 );
+	PlayerTextDrawBackgroundColor( playerid, p_playerTurfTitle[ playerid ], 255 );
+	PlayerTextDrawFont( playerid, p_playerTurfTitle[ playerid ], 1 );
+	PlayerTextDrawLetterSize( playerid, p_playerTurfTitle[ playerid ], 0.240000, 1.200000 );
+	PlayerTextDrawColor( playerid, p_playerTurfTitle[ playerid ], COLOR_GOLD );
+	PlayerTextDrawSetOutline( playerid, p_playerTurfTitle[ playerid ], 1 );
+	PlayerTextDrawSetProportional( playerid, p_playerTurfTitle[ playerid ], 1 );
+ 	return 1;
 }
 
 hook OnServerUpdate( )
@@ -133,9 +153,13 @@ hook OnServerUpdate( )
 
 	            if ( g_gangzoneAttackCount[ z ] < attacker_time_required && oCount == 0 )
 	            {
-	            	foreach ( new i : Player ) if ( p_Class[ i ] != CLASS_POLICE && p_GangID[ i ] == g_gangzoneAttacker[ z ] && IsPlayerInDynamicArea( i, g_gangTurfData[ z ] [ E_AREA ] ) ) {
+	            	foreach ( new i : Player ) if ( p_Class[ i ] != CLASS_POLICE && p_GangID[ i ] == g_gangzoneAttacker[ z ] && IsPlayerInDynamicArea( i, g_gangTurfData[ z ] [ E_AREA ] ) )
+	            	{
 						if ( p_WantedLevel[ i ] < 2 ) GivePlayerWantedLevel( i, 2 - p_WantedLevel[ i ] );
-	            		ShowPlayerHelpDialog( i, 1500, "~r~Control~w~ the area for %d seconds!", attacker_time_required - g_gangzoneAttackCount[ z ] );
+	            		
+						ShowPlayerControlArea( i, 1500, g_gangData[ g_gangzoneAttacker[ z ] ] [ E_COLOR ], attacker_time_required, g_gangzoneAttackCount[ z ] );
+
+	            		//ShowPlayerHelpDialog( i, 1500, "~r~Control~w~ the area for %d seconds!", attacker_time_required - g_gangzoneAttackCount[ z ] );
 	            	}
 	            	g_gangzoneAttackCount[ z ] ++;
                  	g_gangzoneAttackTimeout[ z ] = 0;
@@ -446,6 +470,36 @@ CMD:takeover( playerid, params[ ] )
 }
 
 /* ** Functions ** */
+stock ShowPlayerControlArea( playerid, timeout, gang_color, required, progress )
+{
+	if ( ! IsPlayerConnected( playerid ) )
+		return 0;
+
+	PlayerTextDrawColor( playerid, p_playerTurfTitle[ playerid ], gang_color );
+    PlayerTextDrawShow( playerid, p_playerTurfTitle[ playerid ] );
+
+	SetPlayerProgressBarMaxValue( playerid, p_playerTurfProgress[ playerid ], float( required ) );
+	SetPlayerProgressBarValue( playerid, p_playerTurfProgress[ playerid ], required - progress );
+	SetPlayerProgressBarColour( playerid, p_playerTurfProgress[ playerid ], setAlpha( gang_color, 0x80 ) );
+	ShowPlayerProgressBar( playerid, p_playerTurfProgress[ playerid ] );
+
+    KillTimer( p_TurfProgressTimer[ playerid ] );
+    p_TurfProgressTimer[ playerid ] = -1;
+
+   	if ( timeout != 0 ) {
+   		p_TurfProgressTimer[ playerid ] = SetTimerEx( "HidePlayerControlArea", timeout, false, "d", playerid );
+   	}
+	return 1;
+}
+
+function HidePlayerControlArea( playerid )
+{
+	p_TurfProgressTimer[ playerid ] = -1;
+	HidePlayerProgressBar( playerid, p_playerTurfProgress[ playerid ] );
+	PlayerTextDrawHide( playerid, p_playerTurfTitle[ playerid ] );
+}
+
+
 stock Turf_Create( Float: min_x, Float: min_y, Float: max_x, Float: max_y, owner_id = INVALID_GANG_ID, color = COLOR_GANGZONE, facility_gang_id = INVALID_GANG_ID )
 {
 	new
