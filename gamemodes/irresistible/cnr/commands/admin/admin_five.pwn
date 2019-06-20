@@ -6,19 +6,19 @@
  */
 
 /* ** Commands ** */
-CMD:givearmour( playerid, params[ ] )
+CMD:givearmor( playerid, params[ ] )
 {
     new pID;
     if ( p_AdminLevel[ playerid] < 5 ) return SendError( playerid, ADMIN_COMMAND_REJECT);
-    else if (sscanf (params, "u", pID ) ) SendUsage(playerid, "/givearmour [PLAYER_ID]");
+    else if (sscanf (params, "u", pID ) ) SendUsage(playerid, "/givearmor [PLAYER_ID]");
     else if ( !IsPlayerConnected( pID ) || IsPlayerNPC( pID ) ) return SendError( playerid, "Invalid Player ID." );
     else if ( IsPlayerJailed( pID ) ) return SendError( playerid, "This player is jailed, you cannot do this." );
     else if ( IsPlayerAdminOnDuty( pID ) ) return SendError( playerid, "This player is an admin on duty, you cannot do this." );
     else
     {
-        SendClientMessageFormatted( pID, -1, ""COL_PINK"[ADMIN]"COL_WHITE" %s(%d) gave you armour.", ReturnPlayerName( playerid ), playerid );
-        SendClientMessageFormatted( playerid, -1, ""COL_PINK"[ADMIN]"COL_WHITE" You have given armour to %s(%d).", ReturnPlayerName( pID ), pID );
-        AddAdminLogLineFormatted( "%s(%d) has given armour to %s(%d)", ReturnPlayerName( playerid ), playerid, ReturnPlayerName( pID ), pID );
+        SendClientMessageFormatted( pID, -1, ""COL_PINK"[ADMIN]"COL_WHITE" %s(%d) gave you armur.", ReturnPlayerName( playerid ), playerid );
+        SendClientMessageFormatted( playerid, -1, ""COL_PINK"[ADMIN]"COL_WHITE" You have given armur to %s(%d).", ReturnPlayerName( pID ), pID );
+        AddAdminLogLineFormatted( "%s(%d) has given armor to %s(%d)", ReturnPlayerName( playerid ), playerid, ReturnPlayerName( pID ), pID );
         SetPlayerArmour( pID, 100.0 );
     }
     return 1;
