@@ -6,6 +6,31 @@
  */
 
 /* ** Commands ** */
+CMD:e( playerid, params[ ] )
+{
+	new
+	    msg[ 90 ]
+	;
+
+    if ( p_AdminLevel[ playerid ] < 6 ) return 0;
+    else if ( sscanf( params, "s[90]", msg ) ) return SendUsage( playerid, "/e [MESSAGE]" );
+	else if ( textContainsIP( msg ) ) return SendServerMessage( playerid, "Please do not advertise." );
+    else
+	{
+		foreach(new executiveid : Player)
+			if ( p_AdminLevel[ executiveid ] >= 6 )
+				SendClientMessageFormatted( executiveid, -1, "{FF0000}<Executive Chat> %s(%d):"COL_GREY" %s", ReturnPlayerName( playerid ), playerid, msg );
+	}
+	return 1;
+}
+
+CMD:reloadeditor( playerid, params[ ] )
+{
+	if ( p_AdminLevel[ playerid ] < 6 ) return SendError( playerid, ADMIN_COMMAND_REJECT );
+	SetServerRule( "reloadfs", "objecteditor" );
+	SendClientMessage( playerid, -1, ""COL_PINK"[ADMIN]"COL_WHITE" You have successfully reloaded the object editor." );
+	return 1;
+}
 CMD:createbusiness( playerid, params[ ] )
 {
     new
