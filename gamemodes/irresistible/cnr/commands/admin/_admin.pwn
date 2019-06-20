@@ -173,6 +173,7 @@ static stock
 		{ 6, "/destroyentrance",	"Deleting a entrance" },
 		{ 6, "/setgangleader",		"Settings a player into a gang leader" },
 		{ 6, "/viewgangtalk",		"Viewing gang chat" },
+		{ 6, "/e",			"Executive chat" },
 		{ 6, "/broadcast",			"Broadcasting a music stream" },
 		{ 6, "/setlevel",			"Setting a players admin level " },
 		{ 6, "/setleveloffline",	"Setting a players admin level offline" },
