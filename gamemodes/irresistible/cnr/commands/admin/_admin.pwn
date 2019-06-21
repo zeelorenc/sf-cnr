@@ -130,7 +130,6 @@ static stock
 
 		/* ** Level 5 Commands ** */
 		{ 5, "/armorall",			"Giving everyone armour" },
-		{ 5, "/givearmour",			"Giving a player an armour set" },
 		{ 5, "/givearmor",			"Giving a player an armour set" },
 		{ 5, "/check", 				"Checking a players serial" },
 		{ 5, "/c", 					"Council chat" },
@@ -144,7 +143,6 @@ static stock
 		{ 5, "/safeisbugged", 		"Debug command for robbery safes" },
 		{ 5, "/replenishsafe", 		"Fixes bugged robbery safes" },
 		{ 5, "/autovehrespawn", 	"Setting auto respawn for vehicles" },
-		{ 5, "/megaban", 			"The Mega Ban" },
 		{ 5, "/achangename", 		"Change a players name" },
 		{ 5, "/unbanip", 			"Unbanning a IP address" },
 		{ 5, "/unban", 				"Unban a player from the server" },
