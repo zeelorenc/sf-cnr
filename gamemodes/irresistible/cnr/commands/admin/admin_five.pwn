@@ -6,6 +6,7 @@
  */
 
 /* ** Commands ** */
+CMD:givearmor( playerid, params [ ] ) return cmd_givearmour( playerid, params );
 CMD:givearmour( playerid, params[ ] )
 {
     new pID;
