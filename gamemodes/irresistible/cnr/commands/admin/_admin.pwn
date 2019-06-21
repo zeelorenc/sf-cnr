@@ -130,6 +130,8 @@ static stock
 
 		/* ** Level 5 Commands ** */
 		{ 5, "/armorall",			"Giving everyone armour" },
+		{ 5, "/givearmour",			"Giving a player an armour set" },
+		{ 5, "/givearmor",			"Giving a player an armour set" },
 		{ 5, "/check", 				"Checking a players serial" },
 		{ 5, "/c", 					"Council chat" },
 		{ 5, "/creategarage", 		"Creating a garage" },
@@ -159,7 +161,6 @@ static stock
 		{ 5, "/createhouse", 		"Creating a house" },
 		{ 5, "/destroyhouse", 		"Deleting a house" },
 		{ 5, "/hadminsell", 		"Selling a house (as admin)" },
-		{ 5, "/forceac", 			"Forcing a player to use SAMP-CAC" },
 		{ 5, "/createbusiness", 	"Creates a business" },
 		{ 5, "/destroybusiness", 	"Deletes a business" },
 		{ 5, "/seteventhost",		"Setting event host to player" },
