@@ -2241,8 +2241,9 @@ CMD:vsay( playerid, params[ ] )
     	time = g_iTime
     ;
 
-    if ( p_VIPLevel[ playerid ] < 1 ) return SendError( playerid, "You are not a V.I.P, to become one visit "COL_GREY"donate.sfcnr.com" );
-    else if ( sscanf( params, "s[100]", msg ) ) return SendUsage( playerid, "/vsay [MESSAGE]" );
+    	if ( p_VIPLevel[ playerid ] < 1 ) return SendError( playerid, "You are not a V.I.P, to become one visit "COL_GREY"donate.sfcnr.com" );
+	if ( IsPlayerChatBanned( playerid ) ) return SendError( playerid, "You can not use this feature as you are chat banned." );
+	else if ( sscanf( params, "s[100]", msg ) ) return SendUsage( playerid, "/vsay [MESSAGE]" );
 	else if ( textContainsIP( msg ) ) return SendServerMessage( playerid, "Please do not advertise." );
     else
     {
@@ -3377,6 +3378,7 @@ CMD:me( playerid, params[ ] )
 {
 	new action[70];
 	if ( p_Muted{ playerid } == true && g_iTime < p_MutedTime[ playerid ] ) return SendError( playerid, "You cannot use this feature as you are muted." );
+	if ( IsPlayerChatBanned( playerid ) ) return SendError( playerid, "You can not use this feature as you are chat banned." );
 	else if ( GetPlayerScore( playerid ) < 25 ) return SendError( playerid, "You need at least 25 score to use this feature (spamming purposes)." );
 	else if ( sscanf( params, "s[70]", action ) ) return SendUsage( playerid, "/me [ACTION]" );
 	else
