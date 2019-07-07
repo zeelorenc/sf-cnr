@@ -76,7 +76,7 @@ hook OnPlayerText( playerid, text[ ] )
 {
 	if ( text[ 0 ] == '!' && ! IsPlayerSettingToggled( playerid, SETTING_CHAT_PREFIXES ) )
 	{
-        if ( p_Class[ playerid ] == CLASS_POLICE )
+        if ( p_Class[ playerid ] == CLASS_POLICE && ! IsPlayerChatBanned ( playerid ) )
         {
             format( szBigString, 144, "%s", text );
 
@@ -109,7 +109,8 @@ CMD:t( playerid, params[ ] )
 	;
 
 	if ( GetPlayerClass( playerid ) != CLASS_POLICE ) return SendError( playerid, "Only police can use this command!" );
-    else if ( sscanf( params, "s[90]", msg ) ) return SendUsage( playerid, "/t [MESSAGE]" );
+    else if ( IsPlayerChatBanned( playerid ) ) return SendError( playerid, "You can not use this feature as you are chat banned." );
+	else if ( sscanf( params, "s[90]", msg ) ) return SendUsage( playerid, "/t [MESSAGE]" );
     else
 	{
 		if ( p_Class[ playerid ] == CLASS_POLICE )

@@ -172,7 +172,7 @@ hook OnProgressCompleted( playerid, progressid, params )
 						    Get2DCity( szCity, g_entranceData[ id ] [ E_EX ], g_entranceData[ id ] [ E_EY ], g_entranceData[ id ] [ E_EZ ] );
 						    GetZoneFromCoordinates( szLocation, g_entranceData[ id ] [ E_EX ], g_entranceData[ id ] [ E_EY ], g_entranceData[ id ] [ E_EZ ] );
 						    if ( !strmatch( szCity, "San Fierro" ) && !strmatch( szCity, "Las Venturas" ) && !strmatch( szCity, "Los Santos" ) ) g_robberyData[ robberyid ] [ E_SAFE_LOOT ] /= 2; // Halve Profit outside SF, LV & LS
-							if ( strmatch( szCity, "Las Venturas" ) || strmatch( szCity, "Los Santos" ) ) g_robberyData[ robberyid ] [ E_SAFE_LOOT ] = floatround( g_robberyData[ robberyid ] [ E_SAFE_LOOT ] * 0.5 ); // Remove 50%
+							if ( strmatch( szCity, "Las Venturas" ) || strmatch( szCity, "Los Santos" ) ) g_robberyData[ robberyid ] [ E_SAFE_LOOT ] = floatround( g_robberyData[ robberyid ] [ E_SAFE_LOOT ] * 0.8 ); // Remove 20%
 							SendGlobalMessage( COLOR_GOLD, "[ROBBERY]"COL_WHITE" %s(%d) has robbed "COL_GOLD"%s"COL_WHITE" from %s near %s in %s!", ReturnPlayerName( playerid ), playerid, cash_format( g_robberyData[ robberyid ] [ E_SAFE_LOOT ] ), g_robberyData[ robberyid ] [ E_NAME ], szLocation, szCity );
 					    }
 					    else if ( p_InBusiness[ playerid ] != -1 )

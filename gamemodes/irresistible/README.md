@@ -19,7 +19,7 @@
 - `OnPlayerTickSecond( playerid )`
     - Called every second (specifically a second) for a player, indefinitely
 - `OnServerGameDayEnd( )`
-    - Called every 24 minutes in-game (basically when a new day starts)
+    - Called every 24 hours in-game (basically when a new day starts)
 - `OnNpcConnect( npcid )`
     - Called specifically when an NPC connects, as OnPlayerConnect will not
 - `OnNpcDisconnect( npcid, reason )`

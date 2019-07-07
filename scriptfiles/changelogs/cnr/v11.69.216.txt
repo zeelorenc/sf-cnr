@@ -1,0 +1,7 @@
+(+) You can see the benefits each level brings you through /xp.
+(+) You will now gain Robbery XP for blowing up the bank or jail cells.
+(/) Bad spawn points have been replaced with more convienient ones.
+(/) Businesses earn 50% less money in cities outside of San Fierro.
+(/) Robberies outside of San Fierro pay the 20% less instead of 50%.
+(*) Chatbans will no longer make available police chat and /me.
+(*) CAC users will not be able to damage players while dead.

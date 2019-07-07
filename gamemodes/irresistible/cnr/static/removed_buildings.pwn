@@ -307,12 +307,12 @@ hook OnPlayerConnect( playerid )
 	// Gal Remove Building
 	RemoveBuildingForPlayer(playerid, 11428, -730.7109, 1544.4922, 43.1719, 0.25);
 
-	// Cake City Home
-	RemoveBuildingForPlayer(playerid, 9968, -1683.1406, 786.0938, 38.8203, 0.25);
-	RemoveBuildingForPlayer(playerid, 10057, -1669.2188, 723.4688, 57.5469, 0.25);
-	RemoveBuildingForPlayer(playerid, 10049, -1683.1406, 786.0938, 38.8203, 0.25);
-	RemoveBuildingForPlayer(playerid, 10040, -1765.7422, 799.9453, 53.2266, 0.25);
-	RemoveBuildingForPlayer(playerid, 10234, -1639.7109, 799.3984, 40.0859, 0.25);
+	// // Cake City Home
+	// RemoveBuildingForPlayer(playerid, 9968, -1683.1406, 786.0938, 38.8203, 0.25);
+	// RemoveBuildingForPlayer(playerid, 10057, -1669.2188, 723.4688, 57.5469, 0.25);
+	// RemoveBuildingForPlayer(playerid, 10049, -1683.1406, 786.0938, 38.8203, 0.25);
+	// RemoveBuildingForPlayer(playerid, 10040, -1765.7422, 799.9453, 53.2266, 0.25);
+	// RemoveBuildingForPlayer(playerid, 10234, -1639.7109, 799.3984, 40.0859, 0.25);
 
 	// Zach's Drug Business
 	RemoveBuildingForPlayer(playerid, 5171, 2124.9453, -2275.4531, 20.1406, 0.25);

@@ -103,7 +103,7 @@ hook OnPlayerC4Blown( playerid, Float: X, Float: Y, Float: Z, worldid )
 
 				MoveDynamicObject( g_bankvaultData[ j ] [ E_OBJECT ], g_bankvaultData[ j ] [ E_OPEN_POS ] [ 0 ], g_bankvaultData[ j ] [ E_OPEN_POS ] [ 1 ], g_bankvaultData[ j ] [ E_OPEN_POS ] [ 2 ], 2.0, g_bankvaultData[ j ] [ E_OPEN_ROT ] [ 0 ], g_bankvaultData[ j ] [ E_OPEN_ROT ] [ 1 ], g_bankvaultData[ j ] [ E_OPEN_ROT ] [ 2 ] );
 
-				//GivePlayerExperience( playerid, E_TERRORIST );
+                GivePlayerExperience( playerid, E_ROBBERY, 2.0 );
 				GivePlayerScore( playerid, 3 );
 				GivePlayerWantedLevel( playerid, 24 );
 				ach_HandleBankBlown( playerid );

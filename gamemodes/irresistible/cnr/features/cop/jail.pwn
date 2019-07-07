@@ -145,7 +145,7 @@ hook OnPlayerC4Blown( playerid, Float: X, Float: Y, Float: Z, worldid )
         {
             g_alcatrazTimestamp = g_iTime + 300;
 
-            //GivePlayerExperience( playerid, E_TERRORIST );
+            GivePlayerExperience( playerid, E_ROBBERY, 3.5 );
             GivePlayerScore( playerid, 3 );
             GivePlayerWantedLevel( playerid, 24 );
             ach_HandleJailBlown( playerid );
@@ -165,7 +165,7 @@ hook OnPlayerC4Blown( playerid, Float: X, Float: Y, Float: Z, worldid )
                 g_jailData[ j ] [ E_BOMBED ] = true;
                 g_jailData[ j ] [ E_TIMESTAMP ] = g_iTime + 300;
 
-                //GivePlayerExperience( playerid, E_TERRORIST );
+                GivePlayerExperience( playerid, E_ROBBERY, 2.0 );
                 GivePlayerScore( playerid, 3 );
                 GivePlayerWantedLevel( playerid, 24 );
                 ach_HandleJailBlown( playerid );

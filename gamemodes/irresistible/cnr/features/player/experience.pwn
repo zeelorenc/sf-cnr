@@ -10,6 +10,7 @@
 
 /* ** Definitions ** */
 //#define DIALOG_VIEW_LEVEL			5943
+#define DIALOG_VIEW_LEVEL_BENEFIT	5944
 
 /* ** Macros ** */
 #define IsDoubleXP() 				( GetGVarInt( "doublexp" ) )
@@ -57,15 +58,21 @@ static const
 static const
 	g_requirementData 				[ ] [ E_BENEFIT_DATA ] =
 	{
-		// whatever the level stuff is (no idea)
-		{ E_POLICE,					"Half the number of seconds you spend in jail.", 					75.0 },
-		{ E_POLICE,					"Success rate for booby pins increase every police level",			0.0 },
+		// Police benefits
+		{ E_POLICE,					"Half the number of seconds you spend in jail", 					75.0 },
+		{ E_POLICE,					"Guranteed success when breaking into a safe", 						50.0 },
+		{ E_POLICE,					"Success rate for bobby pins increase 1% each 25 levels",			0.0 },
+		{ E_POLICE,					"Bail amount decreases 1% each level",								0.0 },
 
+		// Robbery benefits
 		{ E_ROBBERY,				"Higher the robbery level, the better success rate of a robbery", 	0.0 },
 		{ E_ROBBERY, 				"Higher the robbery level, the faster you can break into a safe", 	0.0 },
 
-		{ E_DEATHMATCH,				"Benefit of dropping a health pickup when killing a player",	 	10.0 },
-		
+		// Deathmatch benefits
+		{ E_DEATHMATCH,				"1% chance of dropping armour when you kill a player",			 	50.0 },
+		{ E_DEATHMATCH,				"Killed players will drop health equivalent to your level",		 	10.0 },
+
+		// Roleplay benefits
 		{ E_ROLEPLAY,				"Increase success rate in mining based on roleplay level",			0.0 }
 	}
 ;
@@ -138,14 +145,23 @@ hook OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 
 		for ( new i = 0; i < sizeof( g_requirementData ); i ++ )
 		{
-			if ( g_requirementData[ i ][ E_LEVEL_INDEX ] == E_LEVELS: listitem )
+			if ( g_requirementData[ i ] [ E_LEVEL_INDEX ] == E_LEVELS: listitem )
 			{
-				format( szLargeString, sizeof( szLargeString ), "%s"COL_WHITE"%s\t"COL_GOLD"%s\n", szLargeString, g_requirementData[ i ][ E_BENEFIT ], number_format( g_requirementData[ i ][ E_LEVEL_REQUIRE ], .decimals = 0 ) );
+				format(
+					szLargeString,
+					sizeof( szLargeString ),
+					"%s"COL_WHITE"%s\t"COL_GOLD"%s\n",
+					szLargeString,
+					g_requirementData[ i ] [ E_BENEFIT ],
+					number_format( g_requirementData[ i ] [ E_LEVEL_REQUIRE ], .decimals = 0 )
+				);
 			}
 		}
-
-		ShowPlayerDialog( playerid, DIALOG_NULL, DIALOG_STYLE_TABLIST_HEADERS, sprintf( "{FFFFFF}%s's %s Level", ReturnPlayerName( watchingid ), g_levelData[ listitem ] [ E_NAME ] ), szLargeString, "Close", "" );
-		return 1;
+		return ShowPlayerDialog( playerid, DIALOG_VIEW_LEVEL_BENEFIT, DIALOG_STYLE_TABLIST_HEADERS, sprintf( "{FFFFFF}%s's %s Level", ReturnPlayerName( watchingid ), g_levelData[ listitem ] [ E_NAME ] ), szLargeString, "Close", "Back" );
+	}
+	else if ( dialogid == DIALOG_VIEW_LEVEL_BENEFIT && ! response )
+	{
+		return cmd_xp( playerid, sprintf( "%d", GetPVarInt( playerid, "experience_watchingid" ) ) );
 	}
 	else if ( dialogid == DIALOG_XPMARKET && response )
 	{
