@@ -5423,9 +5423,8 @@ public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 
 				format( szLargeString, 750, "%s"COL_GREY"Weed Seeds:"COL_WHITE" %d\n"\
 											""COL_GREY"Fireworks:{FFFFFF} %d\n"\
-											""COL_GREY"Explosive Bullets:{FFFFFF} %d\n"\
-											""COL_GREY"Boombox:{FFFFFF} %s\n",
-											szLargeString, GetPlayerShopItemAmount( playerid, SHOP_ITEM_WEED_SEED ), p_Fireworks[ pID ], p_ExplosiveBullets[ pID ], GetPlayerBoombox( pID ) ? ( "Yes" ) : ( "No" ) );
+											""COL_GREY"Explosive Bullets:{FFFFFF} %d\n",
+											szLargeString, GetPlayerShopItemAmount( playerid, SHOP_ITEM_WEED_SEED ), p_Fireworks[ pID ], p_ExplosiveBullets[ pID ] );
 
 				ShowPlayerDialog( playerid, DIALOG_STATS_REDIRECT, DIALOG_STYLE_MSGBOX, "{FFFFFF}Item Statistics", szLargeString, "Okay", "Back" );
 			}
