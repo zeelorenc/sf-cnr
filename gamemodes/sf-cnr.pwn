@@ -1107,7 +1107,7 @@ public OnPlayerTakePlayerDamage( playerid, issuerid, &Float: amount, weaponid, b
 		return 0;
 
 	// Anti RDM and gang member damage
-	if ( ! IsPlayerInPaintBall( playerid ) && ! IsPlayerBoxing( playerid ) && ! IsPlayerDueling( playerid ) && ! IsPlayerInBattleRoyale( playerid ) && ! IsPlayerInEvent( playerid ) )
+	if ( ! IsPlayerInPaintBall( playerid ) && ! IsPlayerBoxing( playerid ) && ! IsPlayerDueling( playerid ) && ! IsPlayerInBattleRoyale( playerid ) )
 	{
 		#if defined __cloudy_event_system
 		if ( IsPlayerInPlayerGang( issuerid, playerid ) && ! ( IsPlayerInEvent( playerid ) && IsPlayerInEvent( issuerid ) && g_eventData[ EV_FIGHT_TYPE] <= 2 ) )
@@ -5553,6 +5553,61 @@ public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 		    }
 		}
 		else ShowAmmunationMenu( playerid, "{FFFFFF}Weapon Deal - Purchase Weapons", DIALOG_WEAPON_DEAL );
+	}
+	if ( ( dialogid == DIALOG_AMMU ) && response )
+	{
+    	p_AmmunationMenu{ playerid } = listitem;
+        return RedirectAmmunation( playerid, listitem );
+	}
+	if ( dialogid == DIALOG_AMMU_BUY )
+	{
+		if ( !IsPlayerInDynamicCP( playerid, g_Checkpoints[ CP_AMMUNATION_0 ] ) && !IsPlayerInDynamicCP( playerid, g_Checkpoints[ CP_AMMUNATION_1 ] ) && !IsPlayerInDynamicCP( playerid, g_Checkpoints[ CP_AMMUNATION_2 ] ) ) return SendError( playerid, "You must be in the Ammu-Nation purchasing checkpoint to use this." );
+		if ( GetPlayerState( playerid ) == PLAYER_STATE_WASTED || !IsPlayerSpawned( playerid ) ) return SendError( playerid, "You are unable to purchase any weapons at this time." );
+		if ( response )
+		{
+		    for( new i, x = 0; i < sizeof( g_AmmunationWeapons ); i++ )
+		    {
+		        if ( g_AmmunationWeapons[ i ] [ E_MENU ] == p_AmmunationMenu{ playerid } )
+		        {
+		            if ( x == listitem )
+		            {
+						// Chainsaw Removal for LEO through Ammunation
+						if ( GetPlayerClass( playerid ) == CLASS_POLICE && g_AmmunationWeapons[ i ] [ E_WEPID ] == 9 ) return SendError( playerid, "You cannot purchase a chainsaw as a Law Enforcement Officer." );
+					 	if ( g_AmmunationWeapons[ i ] [ E_PRICE ] > GetPlayerCash( playerid ) )
+						{
+						    SendError( playerid, "You don't have enough money for this." );
+						    RedirectAmmunation( playerid, p_AmmunationMenu{ playerid } );
+							return 1;
+						}
+
+						new
+							bDealer = IsPlayerJob( playerid, JOB_WEAPON_DEALER ),
+							iCostPrice = g_AmmunationWeapons[ i ] [ E_PRICE ]
+						;
+
+						if ( bDealer )
+							iCostPrice = floatround( iCostPrice * 0.75 );
+
+						GivePlayerCash( playerid, -iCostPrice );
+
+						StockMarket_UpdateEarnings( E_STOCK_AMMUNATION, iCostPrice, .factor = 0.25 );
+						RedirectAmmunation( playerid, p_AmmunationMenu{ playerid } );
+
+						if ( g_AmmunationWeapons[ i ] [ E_WEPID ] == 101 ) SetPlayerArmour( playerid, float( g_AmmunationWeapons[ i ] [ E_AMMO ] ) );
+						else if ( g_AmmunationWeapons[ i ] [ E_WEPID ] == 102 ) {
+							p_ExplosiveBullets[ playerid ] += g_AmmunationWeapons[ i ] [ E_AMMO ];
+							ShowPlayerHelpDialog( playerid, 3000, "Press ~r~~k~~CONVERSATION_NO~~w~ to activate explosive bullets." );
+						}
+						else GivePlayerWeapon( playerid, g_AmmunationWeapons[ i ] [ E_WEPID ], g_AmmunationWeapons[ i ] [ E_AMMO ] );
+
+						SendServerMessage( playerid, "You have purchased %s(%d) for "COL_GOLD"%s"COL_WHITE"%s.", g_AmmunationWeapons[ i ] [ E_NAME ], g_AmmunationWeapons[ i ] [ E_AMMO ], cash_format( iCostPrice ), bDealer ? ( " (inc. discount)" ) : ( "" ) );
+		                break;
+		            }
+		            x ++;
+		        }
+		    }
+		}
+		else ShowAmmunationMenu( playerid );
 	}
 
 	if ( ( dialogid == DIALOG_UNBAN_CLASS ) && response )
