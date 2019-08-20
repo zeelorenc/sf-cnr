@@ -175,6 +175,7 @@ CMD:aod( playerid, params[ ] )
 	    DisableRemoteVehicleCollisions( playerid, 0 );
 	    SendClientMessage( playerid, -1, ""COL_PINK"[ADMIN]"COL_WHITE" You have disabled administration mode." );
 	}
+	SendClientMessageFormattedToAll( -1, ""COL_PINK"[ADMIN]"COL_WHITE" %s(%d) is now %s-duty.", ReturnPlayerName( playerid ), playerid, p_AdminOnDuty{ playerid } == true ? ( "on" ) : ( "off" ) );
 	SetPlayerColorToTeam( playerid );
 	return 1;
 }
