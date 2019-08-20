@@ -9,6 +9,8 @@
 #include 							< YSI\y_hooks >
 
 /* ** Definitions ** */
+#define MAX_FAVOURITE_WEAPONS 		( 3 )
+
 #define MENU_ASSAULT      			( 0 )
 #define MENU_MELEE					( 1 )
 #define MENU_SUB_SMGS				( 2 )
