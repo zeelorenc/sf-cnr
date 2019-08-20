@@ -10,6 +10,7 @@
 
 /* ** Definitions ** */
 #define MAX_PAINTBALL_ARENAS 		( 6 )
+#define MAX_RANDOM_SPAWNS 			( 6 )
 
 /* ** Variables ** */
 enum E_PAINTBALL_DATA
@@ -18,7 +19,8 @@ enum E_PAINTBALL_DATA
 	E_LIMIT,			E_WEAPONS[ 3 ],			E_PLAYERS,
 	E_ARENA, 			Float: E_ARMOUR, 		Float: E_HEALTH,
 	bool: E_ACTIVE,		bool: E_PASSWORDED, 	bool: E_REFILLER,
-	E_CD_TIMER,			bool: E_HEADSHOT, 		bool: E_CHAT
+	E_CD_TIMER,			bool: E_HEADSHOT, 		bool: E_CHAT,
+	bool: E_RANDOM
 };
 
 enum E_PAINTBALL_ARENAS
@@ -26,6 +28,12 @@ enum E_PAINTBALL_ARENAS
 	Float: E_X, 		Float: E_Y, 			Float: E_Z,
 	E_INTERIOR, 		E_NAME[ 16 ]
 };
+
+enum E_PAINTBALL_SPAWNS
+{
+	E_ARENA_ID,			Float: E_X,			Float: E_Y,
+	Float: E_Z,			E_INTERIOR
+}
 
 new
 	g_paintballArenaData			[ ] [ E_PAINTBALL_ARENAS ] =
@@ -40,6 +48,63 @@ new
 		{ 2193.399700, -1142.272, 1029.796900, 15, 	"Jefferson Motel" },
 		{ -949.294600, 1887.0156, 5.000000000, 17, 	"Sherman Dam" },
 		{ 1721.863800, -1655.338, 20.96800000, 18,  "Atrium" }
+	},
+
+	Float: g_paintballSpawns 				[ sizeof( g_paintballArenaData ) ] [ MAX_RANDOM_SPAWNS ] [ 3 ] =
+	{
+		// warehouse 1
+		{
+			{ 1412.6399, -1.7875, 1000.9244 }, 	{ 1367.4644, -1.3951, 1000.9219 }, 	{ 1402.3909, -23.1311, 1000.9103 },
+			{ 1384.0382, -22.2924, 1000.9230 }, { 1415.2482, -40.9799, 1000.9257 }, { 1366.4021, -44.1363, 1000.9192 }
+		},
+
+		// warehouse 2
+		{
+			{ 1302.5199, -1.7875, 1001.0283 }, 	{ 1278.9091, -12.1906, 1001.0156 }, { 1252.9880, -58.8240, 1002.4990 },
+			{ 1294.0881, -64.9856, 1002.4960 }, { 1303.2255, -44.0086, 1001.0367 }, { 1251.5754, 2.1243, 1001.0344 }
+		},
+
+		// warehouse 3
+		{
+			{ 1063.6504, 2134.9487, 10.8203 },	{ 1089.6921, 2117.0010, 10.8203 },	{ 1089.5262, 2081.0449, 10.8203 },
+			{ 1089.7534, 2077.9897, 15.3504 },	{ 1092.3716, 2119.8259, 15.3504 },	{ 1069.9283, 2103.4949, 10.8203 }
+		},
+
+		// Jizzy's
+		{
+			{ -2659.2817, 1410.3884, 910.1703 }, { -2688.3000, 1430.0179, 906.4609 }, { -2652.9834, 1427.8518, 912.4114 },
+			{ -2636.7776, 1406.3575, 906.4609 }, { -2633.1707, 1392.9563, 906.4609 }, { -2649.0347, 1391.7921, 918.3582 }
+		},
+
+		// LV-PD
+		{
+			{ 296.8772, 174.7912, 1007.1719 }, { 297.3651, 191.2529, 1007.1719 }, { 246.5930, 185.2390, 1008.1719 },
+			{ 231.5877, 171.6264, 1003.0234 }, { 202.1714, 167.9985, 1003.0234 }, { 239.5641, 141.4648, 1003.0234 }
+		},
+		
+		// Stadium 1
+		{
+			{ -1401.6895, 107.4380, 1032.2734 }, { -1403.2545, 126.9025, 1030.4382 }, { -1419.7942, 127.4668, 1030.7443 },
+			{ -1420.6074, 94.6617, 1031.5850 }, { -1403.0911, 87.1951, 1031.0742 }, { -1383.1639, 94.1880, 1030.7531 }
+		},
+		
+		// Jefferson Motel
+		{
+			{ 2193.3997,- 1142.2720, 1029.7969 }, { 2189.8071,- 1146.4943, 1033.7969 }, { 2186.7761,- 1156.9148, 1029.7969 },
+			{ 2187.3259,- 1180.2784, 1029.7969 }, { 2192.7627,- 1181.1935, 1033.7896 }, { 2236.1255,- 1192.7971, 1029.8043 }
+		},
+		
+		// Sherman Dam
+		{
+			{ -949.2946, 1887.0156, 5.0000 }, { -961.5467, 1867.0323, 9.0000 }, { -951.4822, 1847.6415, 5.0000 },
+			{ -956.1313, 1910.7572, 5.0000 }, { -955.7346, 1930.8940, 5.0000 }, { -942.3181, 1951.5886, 5.0000 }
+		},
+		
+		// Atrium
+		{
+			{ 1721.8638, -1655.3380, 20.9688 }, { 1733.5320, -1640.5344, 20.2306 }, { 1702.6398, -1667.7361, 20.2188 },
+			{ 1727.9952, -1640.1686, 23.7289 }, { 1729.5344, -1669.1146, 22.6151 }, { 1709.9868, -1643.1584, 20.2188 }
+		}
 	},
 
 	g_paintballData       			[ MAX_PAINTBALL_ARENAS ] [ E_PAINTBALL_DATA ],
@@ -150,6 +215,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		if ( response )
 		{
+			new
+				iLobby = p_PaintBallArena{ playerid };
+
 			SetPVarInt( playerid, "paintball_edititem", listitem );
 
 			switch( listitem )
@@ -157,7 +225,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 0 .. 4: 	ShowPlayerDialog( playerid, DIALOG_PAINTBALL_EDIT_VAL, DIALOG_STYLE_INPUT, "{FFFFFF}Paintball - Edit", "{FFFFFF}What would you like to set the value of this to?", "Commit", "Back" );
 				case 5:
 				{
-					new iLobby = p_PaintBallArena{ playerid };
 					g_paintballData[ iLobby ] [ E_REFILLER ] = !g_paintballData[ iLobby ] [ E_REFILLER ];
 					SendClientMessageToPaintball( iLobby, -1, ""COL_GREY"[PAINTBALL]"COL_WHITE" Upon death, armour and/or health will%s be restored.", g_paintballData[ iLobby ] [ E_REFILLER ] == false ? ( " not" ) : ( "" ) );
 					showPaintBallLobbyData( playerid, iLobby );
@@ -166,16 +233,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 7 .. 9: 	ShowPlayerDialog( playerid, DIALOG_PAINTBALL_WEP, DIALOG_STYLE_LIST, "{FFFFFF}Paintball - Edit", ""COL_RED"Remove Weapon On This Slot\n9mm Pistol\nSilenced Pistol\nDesert Eagle\nShotgun\nSawn-off Shotgun\nSpas 12\nMac 10\nMP5\nAK-47\nM4\nTec 9\nRifle\nSniper", "Select", "Cancel");
 				case 10:
 				{
-					new iLobby = p_PaintBallArena{ playerid };
 					g_paintballData[ iLobby ] [ E_HEADSHOT ] = !g_paintballData[ iLobby ] [ E_HEADSHOT ];
 					SendClientMessageToPaintball( iLobby, -1, ""COL_GREY"[PAINTBALL]"COL_WHITE" Headshot mode has been %s.", g_paintballData[ iLobby ] [ E_HEADSHOT ] == false ? ( "un-toggled" ) : ( "toggled" ) );
 					showPaintBallLobbyData( playerid, iLobby );
 				}
 				case 11:
 				{
-					new iLobby = p_PaintBallArena{ playerid };
 					g_paintballData[ iLobby ] [ E_CHAT ] = !g_paintballData[ iLobby ] [ E_CHAT ];
 					SendClientMessageToPaintball( iLobby, -1, ""COL_GREY"[PAINTBALL]"COL_WHITE" Upon death, armour and/or health will%s be restored.", g_paintballData[ iLobby ] [ E_CHAT ] == false ? ( " not" ) : ( "" ) );
+					showPaintBallLobbyData( playerid, iLobby );
+				}
+				case 12:
+				{
+					g_paintballData[ iLobby ] [ E_RANDOM ] = !g_paintballData[ iLobby ] [ E_RANDOM ];
+					SendClientMessageToPaintball( iLobby, -1, ""COL_GREY"[PAINTBALL]"COL_WHITE" Random spawn has been %s.", g_paintballData[ iLobby ] [ E_RANDOM ] == false ? ( "un-toggled" ) : ( "toggled" ) );
 					showPaintBallLobbyData( playerid, iLobby );
 				}
 			}
@@ -521,7 +592,7 @@ stock listPaintBallLobbies( playerid )
 
 stock showPaintBallLobbyData( playerid, id, second_button[ ] = "Join Game" )
 {
-	format( szLargeString, sizeof( szLargeString ), "Lobby Name\t"COL_GREY"%s"COL_WHITE"\nLobby Password\t%s"COL_WHITE"\nPlayer Capacity\t"COL_GREY"%d"COL_WHITE"\nHealth\t"COL_GREY"%0.2f%%"COL_WHITE"\nArmour\t"COL_GREY"%0.2f%%"COL_WHITE"\nRefill Health/Armour\t%s"COL_WHITE"\nArena\t"COL_GREY"%s"COL_WHITE"\nPrimary Weapon\t"COL_GREY"%s"COL_WHITE"\nSecondary Weapon\t"COL_GREY"%s"COL_WHITE"\nTertiary Weapon\t"COL_GREY"%s"COL_WHITE"\nHeadshot Mode\t"COL_GREY"%s"COL_WHITE"\nChat\t"COL_GREY"%s",
+	format( szLargeString, sizeof( szLargeString ), "Lobby Name\t"COL_GREY"%s"COL_WHITE"\nLobby Password\t%s"COL_WHITE"\nPlayer Capacity\t"COL_GREY"%d"COL_WHITE"\nHealth\t"COL_GREY"%0.2f%%"COL_WHITE"\nArmour\t"COL_GREY"%0.2f%%"COL_WHITE"\nRefill Health/Armour\t%s"COL_WHITE"\nArena\t"COL_GREY"%s"COL_WHITE"\nPrimary Weapon\t"COL_GREY"%s"COL_WHITE"\nSecondary Weapon\t"COL_GREY"%s"COL_WHITE"\nTertiary Weapon\t"COL_GREY"%s"COL_WHITE"\nHeadshot Mode\t"COL_GREY"%s"COL_WHITE"\nChat\t"COL_GREY"%s\nRandom Spawns\t"COL_GREY"%s",
 		g_paintballData[ id ] [ E_NAME ],
 		g_paintballData[ id ] [ E_PASSWORDED ] == true ? ( ""COL_GREEN"ENABLED" ) : ( ""COL_RED"DISABLED" ),
 		g_paintballData[ id ] [ E_LIMIT ],
@@ -533,7 +604,8 @@ stock showPaintBallLobbyData( playerid, id, second_button[ ] = "Join Game" )
 		ReturnWeaponName( g_paintballData[ id ] [ E_WEAPONS ] [ 1 ] ),
 		ReturnWeaponName( g_paintballData[ id ] [ E_WEAPONS ] [ 2 ] ),
 		g_paintballData[ id ] [ E_HEADSHOT ] == true ? ( ""COL_GREEN"ENABLED" ) : ( ""COL_RED"DISABLED" ),
-		g_paintballData[ id ] [ E_CHAT ] == true ? ( ""COL_GREEN"ENABLED" ) : ( ""COL_RED"DISABLED" )
+		g_paintballData[ id ] [ E_CHAT ] == true ? ( ""COL_GREEN"ENABLED" ) : ( ""COL_RED"DISABLED" ),
+		g_paintballData[ id ] [ E_RANDOM ] == true ? ( ""COL_GREEN"ENABLED" ) : ( ""COL_RED"DISABLED" )
 	);
 	ShowPlayerDialog( playerid, DIALOG_PAINTBALL_EDIT, DIALOG_STYLE_TABLIST, "{FFFFFF}Paintball - Lobby Settings", szLargeString, "Change", second_button );
 }
@@ -595,7 +667,17 @@ stock SpawnToPaintball( playerid, p )
     SetPlayerHealth( playerid, g_paintballData[ p ] [ E_HEALTH ] );
 	SetPlayerArmour( playerid, g_paintballData[ p ] [ E_ARMOUR ] );
 
- 	SetPlayerPos( playerid, g_paintballArenaData[ iArena ] [ E_X ], g_paintballArenaData[ iArena ] [ E_Y ], g_paintballArenaData[ iArena ] [ E_Z ] );
+ 	
+	// random spawns
+	if ( g_paintballData[ p ][ E_RANDOM ] )
+	{
+		new 
+			random_spawn_id = random( MAX_RANDOM_SPAWNS );
+		
+		SetPlayerPos( playerid, g_paintballSpawns[ iArena ][ random_spawn_id ][ 0 ], g_paintballSpawns[ iArena ][ random_spawn_id ][ 1 ], g_paintballSpawns[ iArena ][ random_spawn_id ][ 2 ] );
+	}
+	else SetPlayerPos( playerid, g_paintballArenaData[ iArena ] [ E_X ], g_paintballArenaData[ iArena ] [ E_Y ], g_paintballArenaData[ iArena ] [ E_Z ] );
+
 	SetPlayerInterior( playerid, g_paintballArenaData[ iArena ] [ E_INTERIOR ] );
     SetPlayerVirtualWorld( playerid, p + 10000 );
 }
