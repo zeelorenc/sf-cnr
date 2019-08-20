@@ -677,16 +677,16 @@ static stock GangVehicles_ShowSpawnList( playerid, gangid ) {
 	new
 		current_time = GetServerTime( );
 
-	szBigString = ""COL_WHITE"Vehicle\t"COL_WHITE"Availablity\n";
+	szLargeString = ""COL_WHITE"Vehicle\t"COL_WHITE"Availablity\n";
 
 	foreach ( new slotid : gangvehicles[ gangid ] )
 	{
-		format( szBigString, sizeof( szBigString ), "%s%s\t%s\n", szBigString,
+		format( szLargeString, sizeof( szLargeString ), "%s%s\t%s\n", szLargeString,
 			GetVehicleName( g_gangVehicleData[ gangid ] [ slotid ] [ E_MODEL ] ),
 			g_gangVehicleData[ gangid ] [ slotid ] [ E_ACTIVATION_TIME ] > current_time ? ( secondstotime( g_gangVehicleData[ gangid ] [ slotid ] [ E_ACTIVATION_TIME ] - current_time ) ) : ( COL_GREEN # "Available" )
 		);
 	}
-	return ShowPlayerDialog( playerid, DIALOG_GANG_VEHICLE_SPAWN, DIALOG_STYLE_TABLIST_HEADERS, ""COL_WHITE"Gang Vehicles - Spawn", szBigString, "Select", "Close" );
+	return ShowPlayerDialog( playerid, DIALOG_GANG_VEHICLE_SPAWN, DIALOG_STYLE_TABLIST_HEADERS, ""COL_WHITE"Gang Vehicles - Spawn", szLargeString, "Select", "Close" );
 }
 /* ** Migrations ** */
 /*
