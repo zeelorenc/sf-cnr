@@ -399,6 +399,7 @@ hook OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 
                 DestroyDynamicObject( objectid );
 				mysql_single_query( sprintf( "DELETE FROM `FURNITURE` WHERE `ID`=%d AND `HOUSE_ID`=%d", editing_furniture, editing_house ) );
+				Iter_Remove( housefurniture[ houseid ], i );
 
 				new iNetProfit = floatround( g_houseFurniture[ i ] [ E_COST ] / 2 );
 
@@ -496,7 +497,7 @@ hook OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 					GivePlayerCash( playerid, -g_houseFurniture[ i ] [ E_COST ] );
 					Streamer_Update( playerid ); // SyncObject( playerid );
 
-					SendServerMessage( playerid, "You have purchased a "COL_GREY"%s"COL_WHITE". "COL_ORANGE"[%d/%d]", g_houseFurniture[ i ] [ E_NAME ], total_furniture + 1, vip_slots );
+					SendServerMessage( playerid, "You have purchased a "COL_GREY"%s"COL_WHITE". "COL_ORANGE"[%d/%d]", g_houseFurniture[ i ] [ E_NAME ], total_furniture, vip_slots );
 					ShowFurnitureList( playerid, p_FurnitureCategory{ playerid } );
 				 	break;
 	      		}
