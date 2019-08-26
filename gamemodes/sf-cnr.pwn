@@ -5301,7 +5301,6 @@ public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 				strcat( szCMDS, ""COL_GREY"/labelinfo{FFFFFF} - Displays your label text with the 32 character limit.\n"\
 								""COL_GREY"/radio{FFFFFF} - Shows the list of radio stations you can listen to.\n"\
 								""COL_GREY"/stopradio{FFFFFF} - Stops the radio from playing.\n"\
-								""COL_GREY"/boombox{FFFFFF} - Places a boombox at your position which plays music in small area.\n"\
 								""COL_GREY"/colors(/colours){FFFFFF} - Shows the list of all available colours in-game.\n"\
 								""COL_GREY"/moviemode{FFFFFF} - Toggles movie mode so you can record without all the text on the screen." );
 				ShowPlayerDialog( playerid, DIALOG_CMDS_REDIRECT, DIALOG_STYLE_MSGBOX, "{FFFFFF}Miscellaneous Commands", szCMDS, "Okay", "Back" );
@@ -5423,9 +5422,8 @@ public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 
 				format( szLargeString, 750, "%s"COL_GREY"Weed Seeds:"COL_WHITE" %d\n"\
 											""COL_GREY"Fireworks:{FFFFFF} %d\n"\
-											""COL_GREY"Explosive Bullets:{FFFFFF} %d\n"\
-											""COL_GREY"Boombox:{FFFFFF} %s\n",
-											szLargeString, GetPlayerShopItemAmount( playerid, SHOP_ITEM_WEED_SEED ), p_Fireworks[ pID ], p_ExplosiveBullets[ pID ], GetPlayerBoombox( pID ) ? ( "Yes" ) : ( "No" ) );
+											""COL_GREY"Explosive Bullets:{FFFFFF} %d\n",
+											szLargeString, GetPlayerShopItemAmount( playerid, SHOP_ITEM_WEED_SEED ), p_Fireworks[ pID ], p_ExplosiveBullets[ pID ] );
 
 				ShowPlayerDialog( playerid, DIALOG_STATS_REDIRECT, DIALOG_STYLE_MSGBOX, "{FFFFFF}Item Statistics", szLargeString, "Okay", "Back" );
 			}

@@ -1019,7 +1019,7 @@ thread OnPlayerUnforceAC( playerid, player[ ], pID, bool:offline )
 	return 1;
 }
 
-CMD:giveboombox( playerid, params[ ] )
+/* CMD:giveboombox( playerid, params[ ] )
 {
 	new
 		pID;
@@ -1036,9 +1036,9 @@ CMD:giveboombox( playerid, params[ ] )
 		SetPlayerBoombox( pID, true );
 	}
 	return 1;
-}
+} */
 
-CMD:removeboombox( playerid, params[ ] )
+/* CMD:removeboombox( playerid, params[ ] )
 {
 	new
 		pID;
@@ -1055,4 +1055,4 @@ CMD:removeboombox( playerid, params[ ] )
 		SetPlayerBoombox( pID, false );
 	}
 	return 1;
-}
+} */
