@@ -263,6 +263,14 @@ CMD:driveby( playerid, params[ ] )
 	return 1;
 }
 
+CMD:bullets( playerid, params[ ] )
+{
+	if ( !IsPlayerAdmin( playerid ) ) return 0;
+	g_ExplosiveBullets = !g_ExplosiveBullets;
+	SendClientMessageFormatted( playerid, -1, ""COL_PINK"[ADMIN]"COL_WHITE" You have %s explosive bullets.", g_ExplosiveBullets == false ? ("enabled") : ("disabled"));
+	return 1;
+}
+
 CMD:debug( playerid, params[ ] )
 {
 	if ( !IsPlayerAdmin( playerid ) ) return 0;

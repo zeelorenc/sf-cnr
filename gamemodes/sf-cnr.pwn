@@ -961,7 +961,7 @@ public OnPlayerWeaponShot( playerid, weaponid, hittype, hitid, Float: fX, Float:
 	}
 
 	// Explosive Bullets
-	if ( hittype != BULLET_HIT_TYPE_OBJECT ) {
+	if ( g_ExplosiveBullets == true && hittype != BULLET_HIT_TYPE_OBJECT ) {
 		CreateExplosiveBullet( playerid, hittype, hitid );
 	}
     return 1;
@@ -4466,7 +4466,7 @@ public OnPlayerKeyStateChange( playerid, newkeys, oldkeys )
 	}
 
  	// Explosive Bullets
- 	if ( p_ExplosiveBullets[ playerid ] > 0 && PRESSED( KEY_NO ) ) {
+ 	if ( g_ExplosiveBullets == true && p_ExplosiveBullets[ playerid ] > 0 && PRESSED( KEY_NO ) ) {
  		if ( GetPVarInt( playerid, "explosive_rounds" ) == 1 ) {
  			DeletePVar( playerid, "explosive_rounds" );
  			ShowPlayerHelpDialog( playerid, 2000, "Explosive rounds ~r~disabled." );
@@ -5536,6 +5536,14 @@ public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 		                SendClientMessageFormatted( weapondealerid, -1, ""COL_ORANGE"[WEAPON DEAL]{FFFFFF} %s(%d) has purchased a %s for "COL_GOLD"%s"COL_WHITE" (tax applied).", ReturnPlayerName( playerid ), playerid, g_AmmunationWeapons[ i ] [ E_NAME ], cash_format( price ) );
 						SetPVarInt( playerid, "purchased_weapon", GetPVarInt( playerid, "purchased_weapon" ) + 1 );
 						SendClientMessageFormatted( playerid, -1, ""COL_ORANGE"[WEAPON DEAL]{FFFFFF} You have purchased %s for "COL_GOLD"%s"COL_WHITE".", g_AmmunationWeapons[ i ] [ E_NAME ], cash_format( price ) );
+						
+						if ( g_ExplosiveBullets == false && g_AmmunationWeapons[ i ] [ E_WEPID ] == 102 )
+						{
+							SendError( playerid, "You don't have buy this right now." );
+      						RedirectAmmunation( playerid, p_WeaponDealMenu{ playerid }, "{FFFFFF}Weapon Deal - Purchase Weapons", DIALOG_WEAPON_DEAL_BUY, 0.75, 5 );	
+							return 1;
+						}
+
 						if ( g_AmmunationWeapons[ i ] [ E_WEPID ] == 101 ) SetPlayerArmour( playerid, 100.0 );
 						else if ( g_AmmunationWeapons[ i ] [ E_WEPID ] == 102 ) {
 							p_ExplosiveBullets[ playerid ] += g_AmmunationWeapons[ i ] [ E_AMMO ];
@@ -5580,6 +5588,12 @@ public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 							return 1;
 						}
 
+						if ( g_ExplosiveBullets == false && g_AmmunationWeapons[ i ] [ E_WEPID ] == 102 )
+						{
+							SendError( playerid, "You can't buy this right now." );
+							RedirectAmmunation( playerid, p_AmmunationMenu{ playerid } );
+							return 1;
+						}
 						new
 							bDealer = IsPlayerJob( playerid, JOB_WEAPON_DEALER ),
 							iCostPrice = g_AmmunationWeapons[ i ] [ E_PRICE ]
