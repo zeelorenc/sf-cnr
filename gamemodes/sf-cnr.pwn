@@ -5670,9 +5670,9 @@ public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[ ] )
 
 		if ( IsPlayerJailed( playerid ) ) return SendError( playerid, "You cannot travel while you're in jail." );
 		if ( p_WantedLevel[ playerid ] ) return SendError( playerid, "You cannot travel while you are wanted." );
-		if ( GetPlayerCash( playerid ) < AIR_TRAVEL_COST ) return SendError( playerid, "You need %s to travel between cities.", cash_format( AIR_TRAVEL_COST ) );
+		if ( ( GetPlayerCash( playerid ) < AIR_TRAVEL_COST ) || ( GetPlayerCasinoRewardsPoints( playerid ) < 5.0 ) ) return SendError( playerid, "You need %s to travel between cities.", cash_format( AIR_TRAVEL_COST ) );
 
-		new bool: using_rewards = GetPlayerCasinoRewardsPoints( playerid ) > 5.0;
+		new bool: using_rewards = GetPlayerCasinoRewardsPoints( playerid ) >= 5.0;
 
 		// set position
 		switch ( listitem )
