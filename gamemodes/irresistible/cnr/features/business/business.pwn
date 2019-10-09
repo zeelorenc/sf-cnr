@@ -1351,6 +1351,7 @@ thread OnBusinessLoad( )
 				cache_get_field_content_int( i, "SECURITY", dbHandle ),
 				businessid
 			);
+			UpdateBusinessTitle( businessid );
 
 			// check if valid business
 			if ( b != ITER_NONE )
