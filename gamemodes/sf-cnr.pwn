@@ -4024,14 +4024,14 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 		// Enter a wanted players vehicle?
     	if ( driverid != INVALID_PLAYER_ID && !p_WantedLevel[ playerid ] && p_Class[ playerid ] != CLASS_POLICE )
     	{
-    		if ( p_WantedLevel[ driverid ] > 1 )
-    			GivePlayerWantedLevel( playerid, 2 );
+		if ( p_WantedLevel[ driverid ] > 11 )
+    			GivePlayerWantedLevel( playerid, 12 );
 
-    		else if ( p_WantedLevel[ driverid ] > 5 )
+		else if ( p_WantedLevel[ driverid ] > 5 )
     			GivePlayerWantedLevel( playerid, 6 );
 
-    		else if ( p_WantedLevel[ driverid ] > 11 )
-    			GivePlayerWantedLevel( playerid, 12 );
+    		else if ( p_WantedLevel[ driverid ] > 1 )
+    			GivePlayerWantedLevel( playerid, 2 );
     	}
     }
 
